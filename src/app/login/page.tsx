@@ -6,7 +6,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   const destination = safeLocalPath(redirect);
   return <main className="auth-shell">
     <h1>Войти в учётную запись</h1>
-    <p>Мы отправим ссылку для входа на вашу почту.</p>
+    <p>Введите email и пароль, выданные администратором.</p>
     {error && <p role="alert">{error}</p>}
     <LoginForm redirect={destination} />
   </main>;

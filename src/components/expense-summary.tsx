@@ -6,7 +6,7 @@ export function ExpenseSummary({ summary }: { summary: MonthSummary }) {
     <div className="hero-card">
       <span className="eyebrow">За выбранный месяц</span>
       <strong className="hero-amount">{formatPln(summary.currentGrosz)}</strong>
-      <span className="hero-foot">{summary.recent.length} {summary.recent.length === 1 ? 'документ' : 'документов'} с покупками</span>
+      <span className="hero-foot">Документов с покупками: {summary.recent.length}</span>
     </div>
     <div className="comparison-card">
       <span className="eyebrow">Прошлый месяц</span>
