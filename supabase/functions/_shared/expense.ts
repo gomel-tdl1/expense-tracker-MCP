@@ -1,3 +1,5 @@
+import { CATEGORY_KEYS } from './categories.ts'
+
 export type ReceiptInput = {
   spent_on?: string
   merchant?: string | null
@@ -94,4 +96,3 @@ export function fingerprintReceipt(receipt: NormalizedReceipt): string {
   }
   return hash.toString(16).padStart(16, '0')
 }
-import { CATEGORY_KEYS } from './categories.ts'
