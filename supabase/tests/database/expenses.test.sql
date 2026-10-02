@@ -1,7 +1,7 @@
 begin;
 create extension if not exists pgtap with schema extensions;
 set local search_path = public, extensions, pg_temp;
-select plan(10);
+select plan(11);
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 values
@@ -20,6 +20,13 @@ select is(
 );
 
 select is((select count(*)::integer from expense_items), 2, 'saves both line items');
+select is(
+  (create_expense_receipt(
+    'eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee', '2026-10-02', 'Market', 1200,
+    '[{"name":"Piwo","quantity":2,"amount_grosz":1200,"category":"alcohol"}]'::jsonb,
+    'fingerprint-beer', false
+  )->>'status'), 'created', 'accepts alcohol category'
+);
 do $$ begin
   perform set_config('test.receipt_id', (select id::text from expense_receipts where submission_id = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'), true);
 end $$;
@@ -29,7 +36,7 @@ select throws_ok(
   '22023', 'receipt total differs from item sum', 'rejects a declared total that differs from the item sum'
 );
 
-select is((select count(*)::integer from expense_receipts), 1, 'a failed insert leaves no receipt');
+select is((select count(*)::integer from expense_receipts), 2, 'a failed insert leaves no receipt');
 
 select is(
   (create_expense_receipt(

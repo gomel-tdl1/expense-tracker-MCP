@@ -1,9 +1,7 @@
-export const CATEGORY_LABELS = {
-  groceries: 'Продукты', dining: 'Кафе', home: 'Дом', transport: 'Транспорт',
-  health: 'Здоровье', clothing: 'Одежда', other: 'Другое',
-} as const;
+import { CATEGORY_LABELS, type Category } from '../../supabase/functions/_shared/categories';
 
-export type Category = keyof typeof CATEGORY_LABELS;
+export { CATEGORY_LABELS };
+export type { Category };
 export type ExpenseItem = {
   id: string; name: string; quantity: number; amount_grosz: number; category: Category; position: number;
 };

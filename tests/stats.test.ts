@@ -29,6 +29,14 @@ describe('monthly statistics', () => {
     expect(summary.categories.groceries).toBe(1000);
   });
 
+  it('shows beer spending under alcohol', () => {
+    const summary = summarizeMonth([receipt('2026-10-02', 1200, [
+      { id: 'beer', name: 'Piwo', quantity: 2, amount_grosz: 1200, category: 'alcohol', position: 1 },
+    ])], '2026-10', '2026-10-02');
+    expect(summary.categories.alcohol).toBe(1200);
+    expect(summary.categories.groceries).toBe(0);
+  });
+
   it('returns a real empty state with no daily bars', () => {
     const summary = summarizeMonth([], '2026-10', '2026-10-01');
     expect(summary.currentGrosz).toBe(0);

@@ -30,6 +30,28 @@ describe('receipt normalization', () => {
     expect(() => normalizeReceipt({ ...base, items: [{ name: 'Bread', quantity: 1, category: 'groceries' }] }, '2026-10-01')).toThrow(/price/)
   })
 
+  it('accepts beer as an alcohol line item', () => {
+    const receipt = normalizeReceipt({
+      merchant: 'Sklep',
+      items: [{ name: 'Piwo', quantity: 2, amount_pln: '12,00', category: 'alcohol' }]
+    }, '2026-10-02')
+    expect(receipt.items[0].category).toBe('alcohol')
+  })
+
+  it('corrects a grocery category on alcoholic beer', () => {
+    const receipt = normalizeReceipt({
+      items: [{ name: 'PIWO ŻYWIEC', quantity: 1, amount_pln: '6,00', category: 'groceries' }]
+    }, '2026-10-02')
+    expect(receipt.items[0].category).toBe('alcohol')
+  })
+
+  it('keeps nonalcoholic beer out of alcohol', () => {
+    const receipt = normalizeReceipt({
+      items: [{ name: 'Piwo bezalkoholowe 0,0%', quantity: 1, amount_pln: '5,00', category: 'alcohol' }]
+    }, '2026-10-02')
+    expect(receipt.items[0].category).toBe('groceries')
+  })
+
   it('rejects a printed total that differs from the line sum', () => {
     expect(() => normalizeReceipt({ ...base, total_pln: '19,99' }, '2026-10-01')).toThrow(/total/)
   })

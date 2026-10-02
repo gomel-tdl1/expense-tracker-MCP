@@ -13,7 +13,7 @@ export type NormalizedReceipt = {
   fingerprint: string
 }
 
-const categories = new Set(['groceries', 'dining', 'home', 'transport', 'health', 'clothing', 'other'])
+const categories = new Set<string>(CATEGORY_KEYS)
 
 export function parsePlnAmount(text: string): number {
   const match = /^(-?)(\d{1,8})(?:[,.](\d{1,2}))?$/.exec(text.trim())
@@ -43,6 +43,13 @@ function compact(value: string): string {
   return value.trim().replace(/\s+/g, ' ')
 }
 
+function categoryForItem(name: string, category: string): string {
+  const beer = /(^|[^\p{L}])(piwo|beer|bier|пиво)(?=$|[^\p{L}])/iu.test(name)
+  if (!beer) return category
+  const nonalcoholic = /bezalkohol|non.?alcoholic|(^|[^\p{L}])zero(?=$|[^\p{L}])|(^|[^\d])0(?:[,.]0)?\s*%/iu.test(name)
+  return nonalcoholic ? 'groceries' : 'alcohol'
+}
+
 export function normalizeReceipt(input: ReceiptInput, todayWarsaw: string): NormalizedReceipt {
   const spent_on = input.spent_on ?? todayWarsaw
   if (!validDate(spent_on)) throw new Error('invalid date')
@@ -61,7 +68,7 @@ export function normalizeReceipt(input: ReceiptInput, todayWarsaw: string): Norm
     if (item.amount_pln == null || item.amount_pln.trim() === '') throw new Error('missing item price')
     const amount_grosz = parsePlnAmount(item.amount_pln)
     if (amount_grosz === 0) throw new Error('zero item price')
-    return { name, quantity: item.quantity, amount_grosz, category: item.category }
+    return { name, quantity: item.quantity, amount_grosz, category: categoryForItem(name, item.category) }
   })
   const total_grosz = items.reduce((sum, item) => sum + item.amount_grosz, 0)
   if (total_grosz < -2147483648 || total_grosz > 2147483647) throw new Error('total out of range')
@@ -87,3 +94,4 @@ export function fingerprintReceipt(receipt: NormalizedReceipt): string {
   }
   return hash.toString(16).padStart(16, '0')
 }
+import { CATEGORY_KEYS } from './categories.ts'

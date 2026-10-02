@@ -2,8 +2,11 @@ import type { McpServer } from 'npm:@modelcontextprotocol/server@^2.0.0'
 import type { SupabaseClient } from 'npm:@supabase/supabase-js@2'
 import { z } from 'npm:zod@^4.3.6'
 import { normalizeReceipt, warsawDate } from '../_shared/expense.ts'
+import { CATEGORY_KEYS, CATEGORY_LABELS } from '../_shared/categories.ts'
 
-const category = z.enum(['groceries', 'dining', 'home', 'transport', 'health', 'clothing', 'other'])
+const category = z.enum(CATEGORY_KEYS).describe(
+  `Choose the most specific category for each item, using other only when none fits. Alcoholic beer (piwo), cider, wine (wino) and spirits are alcohol, including when bought in a grocery store. Nonalcoholic beer is groceries. Use groceries for food bought in a store. Keep a discount in the same category as its item. Categories: ${Object.entries(CATEGORY_LABELS).map(([key, label]) => `${key} (${label})`).join(', ')}.`
+)
 const item = z.object({
   name: z.string().min(1).max(200),
   quantity: z.number().positive().default(1),

@@ -35,6 +35,8 @@
 
    `--no-verify-jwt` отключает проверку JWT только на шлюзе функции. Middleware `withSupabase({ auth: 'user' })` проверяет OAuth токен внутри функции, а RLS ограничивает данные. Локальный `supabase/config.toml` содержит `site_url = "http://localhost:3000"`: **не отправляйте его в production через `config push` без замены Site URL и redirect URLs**.
 
+   При обновлении категорий примените миграцию `20261002000000_expand_expense_categories.sql` до публикации новой версии функции. Затем обновите метаданные MCP подключения в ChatGPT Plugins через **Refresh**, чтобы клиент увидел расширенную схему `record_receipt`.
+
 URL функции: `https://YOUR_PROJECT_REF.supabase.co/functions/v1/mcp`. Проверяйте `GET` protected-resource metadata и `401` с `WWW-Authenticate` при вызове без токена. [Схема Supabase MCP](https://supabase.com/docs/guides/ai-tools/byo-mcp).
 
 ## Vercel
@@ -52,7 +54,7 @@ URL функции: `https://YOUR_PROJECT_REF.supabase.co/functions/v1/mcp`. П�
 
 URL удалённого MCP: `https://YOUR_PROJECT_REF.supabase.co/functions/v1/mcp`. Он работает через Streamable HTTP и OAuth 2.1.
 
-- **ChatGPT:** включите Developer mode в Settings → Security and login. В ChatGPT Plugins добавьте MCP URL, проверьте обнаруженные инструменты, войдите через Supabase и разрешите доступ. В новой беседе выберите подключение из меню инструментов. Доступность Developer mode зависит от аккаунта и политики workspace. [Официальная инструкция OpenAI](https://developers.openai.com/plugins/deploy/connect-chatgpt).
+- **ChatGPT на телефоне:** один раз включите Developer mode в Settings → Security and login и добавьте MCP URL через ChatGPT Plugins. Проверьте обнаруженные инструменты, войдите через Supabase и разрешите доступ. Установите созданный личный плагин на тот же аккаунт, затем откройте новый чат на телефоне, выберите плагин из меню инструментов или через `@`, приложите фото чека и попросите записать покупки. Плагины доступны на мобильных устройствах, но автоматический вызов инструмента по одному фото в произвольном чате нужно проверять отдельно. [Подключение MCP](https://developers.openai.com/plugins/deploy/connect-chatgpt), [мобильные плагины](https://learn.chatgpt.com/docs/plugins), [выбор плагина](https://learn.chatgpt.com/docs/migrate-custom-gpts).
 - **Codex CLI/IDE:** добавьте сервер командой `codex mcp add expenses --url https://YOUR_PROJECT_REF.supabase.co/functions/v1/mcp`, затем проверьте `codex mcp list` и пройдите OAuth вход, когда клиент его запросит. Конфигурация CLI и IDE общая. [Официальная документация Codex MCP](https://developers.openai.com/learn/docs-mcp).
 
 OpenAI требует discovery, DCR или CIMD, PKCE и OAuth metadata для защищённого MCP. После добавления подключения проверьте не только список инструментов, но и реальный вход, вызов записи и показ результата на сайте. [Требования OpenAI к OAuth](https://developers.openai.com/plugins/build/auth).
