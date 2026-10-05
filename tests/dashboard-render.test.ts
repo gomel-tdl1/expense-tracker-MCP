@@ -19,7 +19,8 @@ describe('dashboard server rendering', () => {
     expect(html).toContain('październik');
     expect(html).toContain('ON Diesel');
     expect(html).toContain('aria-label="Język"');
-    expect(html).toContain('aria-expanded="false"');
+    expect(html).toContain('/dashboard/categories/fuel?month=2026-10');
+    expect(html).toContain('aria-current="page"');
     expect(html).not.toContain('NaN');
     expect(html).not.toContain('<img');
   });

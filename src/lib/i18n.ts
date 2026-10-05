@@ -9,8 +9,9 @@ export function normalizeLocale(value?: string): Locale {
 
 const ru = {
   categoryHint: 'Нажмите на категорию, чтобы увидеть позиции.', categoryPurchases: 'Позиции в категории', closeCategory: 'Закрыть', categoryTotal: 'Всего в категории',
+  allPurchases: 'Все покупки', allCategories: 'Все категории', exportCsv: 'Скачать CSV', backCategories: 'К категориям', recentShort: 'Последние покупки', share: 'Доля расходов', previous: 'Предыдущий месяц', next: 'Следующий месяц',
   brand: 'расходы', overview: 'Обзор', purchases: 'Покупки', categories: 'Категории',
-  personal: 'Личный обзор', title: 'Расходы в вашем ритме.', subtitle: 'Каждая покупка. В одном месте.',
+  personal: 'Личный обзор', title: 'Ваши расходы', subtitle: 'Каждая покупка. В одном месте.',
   month: 'Месяц', show: 'Показать', signOut: 'Выйти', monthTotal: 'Расходы за месяц',
   priorMonth: 'Прошлый месяц', unchanged: 'Без изменений', compared: 'к прошлому месяцу',
   transactions: 'Покупок', average: 'Средняя покупка', largest: 'Самая большая покупка',
@@ -34,8 +35,9 @@ export const messages: Record<Locale, Messages> = {
   ru,
   en: {
     categoryHint: 'Select a category to see its items.', categoryPurchases: 'Items in category', closeCategory: 'Close', categoryTotal: 'Category total',
+    allPurchases: 'All purchases', allCategories: 'All categories', exportCsv: 'Download CSV', backCategories: 'Back to categories', recentShort: 'Recent purchases', share: 'Spending share', previous: 'Previous month', next: 'Next month',
     brand: 'expenses', overview: 'Overview', purchases: 'Purchases', categories: 'Categories',
-    personal: 'Personal overview', title: 'Spending. In your rhythm.', subtitle: 'Every purchase. All in one place.',
+    personal: 'Personal overview', title: 'Your expenses', subtitle: 'Every purchase. All in one place.',
     month: 'Month', show: 'Show', signOut: 'Sign out', monthTotal: 'Monthly spending',
     priorMonth: 'Previous month', unchanged: 'No change', compared: 'vs previous month',
     transactions: 'Purchases', average: 'Average purchase', largest: 'Largest purchase',
@@ -56,8 +58,9 @@ export const messages: Record<Locale, Messages> = {
   },
   pl: {
     categoryHint: 'Wybierz kategorię, aby zobaczyć pozycje.', categoryPurchases: 'Pozycje w kategorii', closeCategory: 'Zamknij', categoryTotal: 'Suma w kategorii',
+    allPurchases: 'Wszystkie zakupy', allCategories: 'Wszystkie kategorie', exportCsv: 'Pobierz CSV', backCategories: 'Wróć do kategorii', recentShort: 'Ostatnie zakupy', share: 'Udział wydatków', previous: 'Poprzedni miesiąc', next: 'Następny miesiąc',
     brand: 'wydatki', overview: 'Przegląd', purchases: 'Zakupy', categories: 'Kategorie',
-    personal: 'Twój przegląd', title: 'Wydatki w Twoim rytmie.', subtitle: 'Każdy zakup. W jednym miejscu.',
+    personal: 'Twój przegląd', title: 'Twoje wydatki', subtitle: 'Każdy zakup. W jednym miejscu.',
     month: 'Miesiąc', show: 'Pokaż', signOut: 'Wyloguj', monthTotal: 'Wydatki w miesiącu',
     priorMonth: 'Poprzedni miesiąc', unchanged: 'Bez zmian', compared: 'względem poprzedniego miesiąca',
     transactions: 'Zakupy', average: 'Średni zakup', largest: 'Największy zakup',
