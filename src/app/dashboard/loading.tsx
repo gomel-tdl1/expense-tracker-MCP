@@ -1,3 +1,9 @@
+'use client';
+import { useLocale } from '../../components/preferences';
+import { messages } from '../../lib/i18n';
+import { BeatStrip } from '../../components/brand';
+
 export default function Loading() {
-  return <main className="dashboard-shell"><div className="page-content"><p role="status">Загружаем расходы…</p></div></main>;
+  const t = messages[useLocale()];
+  return <main className="dashboard-shell"><div className="page-content loading-page"><BeatStrip /><p role="status">{t.loading}</p></div></main>;
 }

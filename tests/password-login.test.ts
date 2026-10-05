@@ -47,3 +47,10 @@ describe('password login', () => {
     expect(mocks.signInWithPassword).not.toHaveBeenCalled()
   })
 })
+
+it('localizes the generic sign-in error without exposing provider details', async () => {
+  mocks.signInWithPassword.mockResolvedValue({ error: { message: 'Internal provider detail' } });
+  const form = credentials('user@example.com', 'wrong', '/dashboard');
+  form.set('locale', 'pl');
+  await expect(signInWithPassword(form)).resolves.toEqual({ error: 'Nieprawidłowy email lub hasło.' });
+});
